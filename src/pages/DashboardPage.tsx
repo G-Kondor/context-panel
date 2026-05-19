@@ -24,7 +24,7 @@ export function DashboardPage() {
         variant="contained"
         size="large"
         startIcon={<TableRowsOutlinedIcon />}
-        onClick={() => open('active')}
+        onClick={() => open()}
         sx={{
           background: 'linear-gradient(180deg, #4069fe 0%, #1c4ee4 100%)',
           borderRadius: '12px',
