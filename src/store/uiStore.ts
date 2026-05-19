@@ -20,7 +20,7 @@ export const useUiStore = create<UiState>((set, get) => ({
   contextPanelState: 'closed',
   contextPanelTab: 'details',
   navRailOpen: true,
-  themeMode: 'dark',
+  themeMode: 'light',
 
   openContextPanel: (tab) =>
     set({ contextPanelState: 'open', ...(tab ? { contextPanelTab: tab } : {}) }),

@@ -1,7 +1,6 @@
 import { Box, Stack, Typography, IconButton, Divider, Button } from '@mui/material'
 import { AnimatePresence, motion } from 'motion/react'
 import CloseIcon from '@mui/icons-material/Close'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { useContextPanel } from '@/hooks/useContextPanel'
 import { APPBAR_HEIGHT } from './TopBar'
 import { radius, concrete, actionPrimary } from '@/theme/tokens'
@@ -121,22 +120,6 @@ export function ContextPanel() {
                   )
                 })}
 
-                {/* Overflow gradient + chevron */}
-                <Box sx={{
-                  position: 'absolute',
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: 64,
-                  background: 'linear-gradient(to right, rgba(255,255,255,0), white 50%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                }}>
-                  <IconButton size="small" sx={{ color: concrete[15] }}>
-                    <ChevronRightIcon sx={{ fontSize: 20 }} />
-                  </IconButton>
-                </Box>
               </Stack>
             </Box>
 
