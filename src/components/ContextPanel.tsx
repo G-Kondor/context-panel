@@ -11,6 +11,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { useContextPanel } from '@/hooks/useContextPanel'
 import { APPBAR_HEIGHT } from './TopBar'
+import { radius, concrete, actionPrimary } from '@/theme/tokens'
 
 export const PANEL_WIDTH = 360
 
@@ -36,9 +37,9 @@ export function ContextPanel() {
           top: `${APPBAR_HEIGHT}px`,
           height: `calc(100% - ${APPBAR_HEIGHT}px)`,
           bgcolor: '#ffffff',
-          color: '#242628',
+          color: concrete[15],
           border: 'none',
-          borderRadius: '12px 0 0 36px',
+          borderRadius: `${radius.lg}px 0 0 ${radius.lg}px`,
           boxShadow: '0px 0px 2px rgba(15,17,19,0.1), 0px 8px 16px rgba(15,17,19,0.1)',
           display: 'flex',
           flexDirection: 'column',
@@ -65,26 +66,26 @@ export function ContextPanel() {
                 sx={{
                   px: 1.5,
                   py: 0.5,
-                  borderRadius: '12px',
-                  border: isActive ? '1px solid #8f9193' : '1px solid transparent',
+                  borderRadius: `${radius.lg}px`,
+                  border: isActive ? `1px solid ${concrete[60]}` : '1px solid transparent',
                   cursor: 'pointer',
                   flexShrink: 0,
                   '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' },
                 }}
               >
-                <Typography sx={{ fontSize: 12, fontWeight: 600, color: '#242628', letterSpacing: '0.3px', whiteSpace: 'nowrap' }}>
+                <Typography sx={{ fontSize: 12, fontWeight: 600, color: concrete[15], letterSpacing: '0.3px', whiteSpace: 'nowrap' }}>
                   {tab.label}
                 </Typography>
                 {tab.badge && (
                   <Box sx={{
-                    bgcolor: '#1c4ee4',
+                    bgcolor: actionPrimary.gradientEnd,
                     color: 'white',
                     fontSize: 12,
                     fontWeight: 600,
                     height: 16,
                     minWidth: 16,
                     px: 0.5,
-                    borderRadius: '12px',
+                    borderRadius: `${radius.lg}px`,
                     border: '1px solid white',
                     display: 'flex',
                     alignItems: 'center',
@@ -110,7 +111,7 @@ export function ContextPanel() {
             alignItems: 'center',
             justifyContent: 'flex-end',
           }}>
-            <IconButton size="small" sx={{ color: '#242628' }}>
+            <IconButton size="small" sx={{ color: concrete[15] }}>
               <ChevronRightIcon sx={{ fontSize: 20 }} />
             </IconButton>
           </Box>
@@ -124,14 +125,14 @@ export function ContextPanel() {
         <Box sx={{ pr: 3, mb: 1.5, flexShrink: 0 }}>
           <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
             <Box sx={{ flex: 1 }}>
-              <Typography sx={{ fontSize: 20, fontWeight: 600, color: '#242628', lineHeight: '24px', mb: 0.25, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <Typography sx={{ fontSize: 20, fontWeight: 600, color: concrete[15], lineHeight: '24px', mb: 0.25, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 Title
               </Typography>
-              <Typography sx={{ fontSize: 12, color: '#242628', letterSpacing: '0.3px', lineHeight: '16px' }}>
+              <Typography sx={{ fontSize: 12, color: concrete[15], letterSpacing: '0.3px', lineHeight: '16px' }}>
                 {'Meta data 1   •   Metadata 2   •   Metadata 3'}
               </Typography>
             </Box>
-            <IconButton size="small" onClick={close} sx={{ color: '#242628', mt: -0.25 }}>
+            <IconButton size="small" onClick={close} sx={{ color: concrete[15], mt: -0.25 }}>
               <CloseIcon sx={{ fontSize: 20 }} />
             </IconButton>
           </Stack>
@@ -147,14 +148,14 @@ export function ContextPanel() {
         </Box>
 
         <Box sx={{ pr: 3, mb: 0.5, flexShrink: 0 }}>
-          <Divider sx={{ borderColor: '#e2e2e5' }} />
+          <Divider sx={{ borderColor: concrete[90] }} />
         </Box>
 
         {/* Scrollable content */}
         <Box sx={{ flex: 1, overflowY: 'auto', pr: '8px', display: 'flex', flexDirection: 'column',
           '&::-webkit-scrollbar': { width: 9 },
-          '&::-webkit-scrollbar-track': { bgcolor: '#edeff1', boxShadow: 'inset 1px 0 0 #e8e8e8, inset -1px 0 0 #f0f0f0' },
-          '&::-webkit-scrollbar-thumb': { bgcolor: '#aaabae', borderRadius: 1 },
+          '&::-webkit-scrollbar-track': { bgcolor: concrete[95], boxShadow: `inset 1px 0 0 ${concrete[90]}, inset -1px 0 0 ${concrete[95]}` },
+          '&::-webkit-scrollbar-thumb': { bgcolor: concrete[70], borderRadius: 1 },
         }}>
           <Stack spacing={1.5} sx={{ py: 0.5 }}>
             <Box sx={{ bgcolor: '#ffdad7', py: 0.5, display: 'flex', justifyContent: 'center', borderRadius: 0.5 }}>
@@ -170,7 +171,7 @@ export function ContextPanel() {
       {/* ── Footer ── */}
       <Box sx={{
         bgcolor: 'white',
-        borderRadius: '0 0 0 36px',
+        borderRadius: `0 0 0 ${radius.lg}px`,
         flexShrink: 0,
         boxShadow: '0px -20px 20px white',
       }}>
@@ -178,9 +179,9 @@ export function ContextPanel() {
           <Button
             variant="outlined"
             sx={{
-              borderColor: '#8f9193',
-              color: '#242628',
-              borderRadius: '12px',
+              borderColor: concrete[60],
+              color: concrete[15],
+              borderRadius: `${radius.lg}px`,
               textTransform: 'none',
               fontWeight: 500,
               fontSize: 14,
@@ -188,7 +189,7 @@ export function ContextPanel() {
               px: 1.5,
               py: 1,
               lineHeight: '20px',
-              '&:hover': { borderColor: '#242628', bgcolor: 'transparent' },
+              '&:hover': { borderColor: concrete[15], bgcolor: 'transparent' },
             }}
           >
             {'Secondary'}
@@ -197,8 +198,8 @@ export function ContextPanel() {
             variant="contained"
             disableElevation
             sx={{
-              background: 'linear-gradient(180deg, #4069fe 0%, #1c4ee4 100%)',
-              borderRadius: '12px',
+              background: `linear-gradient(180deg, ${actionPrimary.gradientStart} 0%, ${actionPrimary.gradientEnd} 100%)`,
+              borderRadius: `${radius.lg}px`,
               textTransform: 'none',
               fontWeight: 500,
               fontSize: 14,
@@ -206,9 +207,9 @@ export function ContextPanel() {
               px: 1.5,
               py: 1,
               lineHeight: '20px',
-              color: 'white',
+              color: actionPrimary.onPrimary,
               '&:hover': {
-                background: 'linear-gradient(180deg, #3558e0 0%, #1640c8 100%)',
+                background: `linear-gradient(180deg, ${actionPrimary.gradientStartHover} 0%, ${actionPrimary.gradientEndHover} 100%)`,
               },
             }}
           >

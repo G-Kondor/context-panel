@@ -11,6 +11,8 @@ import {
 import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
 import ViewSidebarOutlinedIcon from '@mui/icons-material/ViewSidebarOutlined'
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import { useUiStore } from '@/store'
 
 export const APPBAR_HEIGHT = 56
@@ -18,6 +20,8 @@ export const APPBAR_HEIGHT = 56
 export function TopBar() {
   const toggleNavRail = useUiStore((s) => s.toggleNavRail)
   const toggleContextPanel = useUiStore((s) => s.toggleContextPanel)
+  const themeMode = useUiStore((s) => s.themeMode)
+  const toggleTheme = useUiStore((s) => s.toggleTheme)
 
   return (
     <AppBar position="fixed" sx={{ zIndex: (t) => t.zIndex.drawer + 1 }}>
@@ -42,9 +46,18 @@ export function TopBar() {
 
         <Box sx={{ flex: 1 }} />
 
+        <Tooltip title={themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
+          <IconButton size="small" onClick={toggleTheme} sx={{ mr: 0.5 }}>
+            {themeMode === 'dark'
+              ? <LightModeOutlinedIcon fontSize="small" />
+              : <DarkModeOutlinedIcon fontSize="small" />
+            }
+          </IconButton>
+        </Tooltip>
+
         <Tooltip title="Notifications">
           <IconButton size="small" sx={{ mr: 0.5 }}>
-            <Badge badgeContent={3} color="primary" variant="dot">
+            <Badge color="primary" variant="dot">
               <NotificationsOutlinedIcon fontSize="small" />
             </Badge>
           </IconButton>
