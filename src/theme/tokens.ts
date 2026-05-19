@@ -51,9 +51,11 @@ export const actionPrimary = {
   gradientStart: '#4069FE',
   gradientEnd:   '#1C4EE4',
   onPrimary:     '#FFFFFF',
-  // Darker hover states
   gradientStartHover: '#3558E0',
   gradientEndHover:   '#1640C8',
+  // Darker "active" gradient used for stepper active badge
+  activeGradientStart: '#002585',
+  activeGradientEnd:   '#001C6C',
 } as const
 
 // ─── Semantic surface tokens ──────────────────────────────────────────────────

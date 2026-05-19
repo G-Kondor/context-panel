@@ -21,6 +21,15 @@ const TABS = [
   { id: 'tab3', label: 'Tab button', badge: null },
 ]
 
+const STEPS = [
+  { n: 1, label: 'Step 1', active: true },
+  { n: 2, label: 'Step 2', active: false },
+  { n: 3, label: 'Step 3', active: false },
+  { n: 4, label: 'Step 4', active: false },
+  { n: 5, label: 'Step 5', active: false },
+  { n: 6, label: 'Step 6', active: false },
+]
+
 export function ContextPanel() {
   const { isOpen, activeTab, close, setTab } = useContextPanel()
 
@@ -79,7 +88,7 @@ export function ContextPanel() {
                 {tab.badge && (
                   <Box sx={{
                     bgcolor: actionPrimary.gradientEnd,
-                    color: 'white',
+                    color: '#ffffff',
                     fontSize: 12,
                     fontWeight: 600,
                     height: 16,
@@ -125,10 +134,10 @@ export function ContextPanel() {
         <Box sx={{ pr: 3, mb: 1.5, flexShrink: 0 }}>
           <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
             <Box sx={{ flex: 1 }}>
-              <Typography sx={{ fontSize: 20, fontWeight: 600, color: concrete[15], lineHeight: '24px', mb: 0.25, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <Typography sx={{ fontSize: 20, fontWeight: 600, color: concrete[15], lineHeight: '24px', mb: 0.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 Title
               </Typography>
-              <Typography sx={{ fontSize: 12, color: concrete[15], letterSpacing: '0.3px', lineHeight: '16px' }}>
+              <Typography sx={{ fontSize: 12, fontWeight: 400, color: concrete[15], letterSpacing: '0.3px', lineHeight: '16px' }}>
                 {'Meta data 1   •   Metadata 2   •   Metadata 3'}
               </Typography>
             </Box>
@@ -138,40 +147,87 @@ export function ContextPanel() {
           </Stack>
         </Box>
 
-        {/* Content placeholder (header area) */}
-        <Box sx={{ pr: 3, mb: 1.5, flexShrink: 0 }}>
-          <Box sx={{ bgcolor: '#ffdad7', py: 0.5, display: 'flex', justifyContent: 'center', borderRadius: 0.5 }}>
-            <Typography sx={{ color: '#930012', fontSize: 10, fontWeight: 600, letterSpacing: '0.3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              Replace me
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box sx={{ pr: 3, mb: 0.5, flexShrink: 0 }}>
+        {/* Divider */}
+        <Box sx={{ pr: 3, mb: 0, flexShrink: 0 }}>
           <Divider sx={{ borderColor: concrete[90] }} />
         </Box>
 
-        {/* Scrollable content */}
-        <Box sx={{ flex: 1, overflowY: 'auto', pr: '8px', display: 'flex', flexDirection: 'column',
+        {/* Scrollable stepper content */}
+        <Box sx={{
+          flex: 1,
+          overflowY: 'auto',
+          pr: '8px',
+          pt: 1.5,
           '&::-webkit-scrollbar': { width: 9 },
           '&::-webkit-scrollbar-track': { bgcolor: concrete[95], boxShadow: `inset 1px 0 0 ${concrete[90]}, inset -1px 0 0 ${concrete[95]}` },
           '&::-webkit-scrollbar-thumb': { bgcolor: concrete[70], borderRadius: 1 },
         }}>
-          <Stack spacing={1.5} sx={{ py: 0.5 }}>
-            <Box sx={{ bgcolor: '#ffdad7', py: 0.5, display: 'flex', justifyContent: 'center', borderRadius: 0.5 }}>
-              <Typography sx={{ color: '#930012', fontSize: 10, fontWeight: 600 }}>Replace me</Typography>
-            </Box>
-            <Box sx={{ bgcolor: '#ffdad7', py: 0.5, display: 'flex', justifyContent: 'center', borderRadius: 0.5 }}>
-              <Typography sx={{ color: '#930012', fontSize: 10, fontWeight: 600 }}>Replace me</Typography>
-            </Box>
-          </Stack>
+          {STEPS.map((step, i) => {
+            const isLast = i === STEPS.length - 1
+            return (
+              <Stack
+                key={step.n}
+                direction="row"
+                alignItems="flex-start"
+                spacing={1}
+                sx={{ minHeight: 60, pb: isLast ? 1 : 0.5, pt: i === 0 ? 0 : 0.25 }}
+              >
+                {/* Step column: badge + connector line */}
+                <Stack alignItems="center" sx={{ width: 34, flexShrink: 0, alignSelf: 'stretch' }}>
+                  {/* Badge */}
+                  <Box sx={{
+                    width: 32,
+                    height: 32,
+                    minHeight: 32,
+                    borderRadius: '100px',
+                    background: step.active
+                      ? `linear-gradient(180deg, ${actionPrimary.activeGradientStart} 0%, ${actionPrimary.activeGradientEnd} 100%)`
+                      : concrete[90],
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    <Typography sx={{
+                      fontSize: 12,
+                      fontWeight: 600,
+                      letterSpacing: '0.3px',
+                      lineHeight: '16px',
+                      color: step.active ? '#ffffff' : concrete[15],
+                      fontVariantNumeric: 'lining-nums tabular-nums',
+                    }}>
+                      {step.n}
+                    </Typography>
+                  </Box>
+
+                  {/* Connector line */}
+                  {!isLast && (
+                    <Box sx={{ flex: 1, width: '1px', bgcolor: concrete[90], mt: 1 }} />
+                  )}
+                </Stack>
+
+                {/* Step label */}
+                <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', pt: 1, pb: isLast ? 1 : 2.5 }}>
+                  <Typography sx={{
+                    fontSize: 12,
+                    fontWeight: step.active ? 600 : 400,
+                    color: concrete[15],
+                    letterSpacing: '0.3px',
+                    lineHeight: '16px',
+                  }}>
+                    {step.label}
+                  </Typography>
+                </Box>
+              </Stack>
+            )
+          })}
         </Box>
       </Box>
 
       {/* ── Footer ── */}
       <Box sx={{
         bgcolor: 'white',
-        borderRadius: `0 0 0 ${radius.lg}px`,
+        borderRadius: `0 0 0 ${radius.xxl}px`,
         flexShrink: 0,
         boxShadow: '0px -20px 20px white',
       }}>
@@ -192,7 +248,7 @@ export function ContextPanel() {
               '&:hover': { borderColor: concrete[15], bgcolor: 'transparent' },
             }}
           >
-            {'Secondary'}
+            Secondary
           </Button>
           <Button
             variant="contained"
@@ -213,7 +269,7 @@ export function ContextPanel() {
               },
             }}
           >
-            {'Primary'}
+            Primary
           </Button>
         </Stack>
       </Box>
