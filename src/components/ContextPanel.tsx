@@ -1,156 +1,23 @@
 import {
   Drawer,
   Box,
-  Tabs,
-  Tab,
+  Stack,
   Typography,
   IconButton,
   Divider,
-  Stack,
-  Chip,
-  LinearProgress,
-  Avatar,
+  Button,
 } from '@mui/material'
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
-import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined'
+import CloseIcon from '@mui/icons-material/Close'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { useContextPanel } from '@/hooks/useContextPanel'
 import { APPBAR_HEIGHT } from './TopBar'
 
-export const PANEL_WIDTH = 300
-
-function DetailsTab() {
-  return (
-    <Stack spacing={2} sx={{ p: 2 }}>
-      <Box>
-        <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
-          Status
-        </Typography>
-        <Stack direction="row" spacing={1} mt={0.75} flexWrap="wrap" gap={0.5}>
-          <Chip label="Active" color="success" size="small" />
-          <Chip label="v2.4.1" size="small" variant="outlined" />
-        </Stack>
-      </Box>
-
-      <Divider />
-
-      <Box>
-        <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
-          Completion
-        </Typography>
-        {[
-          { label: 'Tasks', value: 72 },
-          { label: 'Tests', value: 58 },
-          { label: 'Docs', value: 35 },
-        ].map(({ label, value }) => (
-          <Box key={label} sx={{ mt: 1.5 }}>
-            <Stack direction="row" justifyContent="space-between" mb={0.5}>
-              <Typography variant="body2" color="text.secondary">{label}</Typography>
-              <Typography variant="body2" fontWeight={600}>{value}%</Typography>
-            </Stack>
-            <LinearProgress variant="determinate" value={value} sx={{ height: 4, borderRadius: 2 }} />
-          </Box>
-        ))}
-      </Box>
-
-      <Divider />
-
-      <Box>
-        <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
-          Properties
-        </Typography>
-        {[
-          { key: 'Owner', val: 'Gergo K.' },
-          { key: 'Priority', val: 'High' },
-          { key: 'Due date', val: 'Jun 1, 2026' },
-          { key: 'Environment', val: 'Production' },
-        ].map(({ key, val }) => (
-          <Stack key={key} direction="row" justifyContent="space-between" mt={1}>
-            <Typography variant="body2" color="text.secondary">{key}</Typography>
-            <Typography variant="body2" fontWeight={500}>{val}</Typography>
-          </Stack>
-        ))}
-      </Box>
-    </Stack>
-  )
-}
-
-function ActivityTab() {
-  const events = [
-    { user: 'GK', action: 'Deployed to production', time: '2m ago', color: '#6366f1' },
-    { user: 'AS', action: 'Merged pull request #42', time: '18m ago', color: '#ec4899' },
-    { user: 'GK', action: 'Created branch feature/context', time: '1h ago', color: '#6366f1' },
-    { user: 'ML', action: 'Reviewed design specs', time: '3h ago', color: '#10b981' },
-    { user: 'AS', action: 'Updated dependencies', time: '5h ago', color: '#ec4899' },
-  ]
-
-  return (
-    <Stack spacing={0} sx={{ p: 2 }}>
-      {events.map((e, i) => (
-        <Stack key={i} direction="row" spacing={1.5} sx={{ pb: 2 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Avatar sx={{ width: 28, height: 28, fontSize: '0.7rem', bgcolor: e.color }}>
-              {e.user}
-            </Avatar>
-            {i < events.length - 1 && (
-              <Box sx={{ width: 1, flex: 1, bgcolor: 'divider', mt: 0.75 }} />
-            )}
-          </Box>
-          <Box sx={{ pt: 0.25 }}>
-            <Typography variant="body2" fontWeight={500}>{e.action}</Typography>
-            <Typography variant="caption" color="text.secondary">{e.time}</Typography>
-          </Box>
-        </Stack>
-      ))}
-    </Stack>
-  )
-}
-
-function TeamTab() {
-  const members = [
-    { initials: 'GK', name: 'Gergo Kondor', role: 'Owner', color: '#6366f1', online: true },
-    { initials: 'AS', name: 'Anna Smith', role: 'Developer', color: '#ec4899', online: true },
-    { initials: 'ML', name: 'Mike Lee', role: 'Designer', color: '#10b981', online: false },
-    { initials: 'JD', name: 'Jane Doe', role: 'QA', color: '#f59e0b', online: false },
-  ]
-
-  return (
-    <Stack spacing={1} sx={{ p: 2 }}>
-      {members.map((m) => (
-        <Stack
-          key={m.name}
-          direction="row"
-          spacing={1.5}
-          alignItems="center"
-          sx={{ p: 1, borderRadius: 2, '&:hover': { bgcolor: 'action.hover' }, cursor: 'default' }}
-        >
-          <Box sx={{ position: 'relative' }}>
-            <Avatar sx={{ width: 32, height: 32, fontSize: '0.75rem', bgcolor: m.color }}>
-              {m.initials}
-            </Avatar>
-            <Box sx={{
-              position: 'absolute', bottom: 0, right: 0,
-              width: 9, height: 9, borderRadius: '50%',
-              bgcolor: m.online ? '#22c55e' : '#475569',
-              border: '1.5px solid',
-              borderColor: 'background.paper',
-            }} />
-          </Box>
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="body2" fontWeight={500} noWrap>{m.name}</Typography>
-            <Typography variant="caption" color="text.secondary">{m.role}</Typography>
-          </Box>
-        </Stack>
-      ))}
-    </Stack>
-  )
-}
+export const PANEL_WIDTH = 360
 
 const TABS = [
-  { id: 'details', label: 'Details', icon: <InfoOutlinedIcon sx={{ fontSize: 16 }} /> },
-  { id: 'activity', label: 'Activity', icon: <TimelineOutlinedIcon sx={{ fontSize: 16 }} /> },
-  { id: 'team', label: 'Team', icon: <PeopleOutlinedIcon sx={{ fontSize: 16 }} /> },
+  { id: 'active', label: 'Active tab', badge: null },
+  { id: 'inactive', label: 'Inactive + badge', badge: '99+' },
+  { id: 'tab3', label: 'Tab button', badge: null },
 ]
 
 export function ContextPanel() {
@@ -159,53 +26,195 @@ export function ContextPanel() {
   return (
     <Drawer
       anchor="right"
-      variant="persistent"
+      variant="temporary"
       open={isOpen}
+      onClose={close}
+      ModalProps={{ keepMounted: true }}
       sx={{
-        width: isOpen ? PANEL_WIDTH : 0,
-        flexShrink: 0,
-        transition: 'width 0.2s ease',
         '& .MuiDrawer-paper': {
           width: PANEL_WIDTH,
-          pt: `${APPBAR_HEIGHT}px`,
-          borderLeft: '1px solid',
-          borderColor: 'divider',
+          top: `${APPBAR_HEIGHT}px`,
+          height: `calc(100% - ${APPBAR_HEIGHT}px)`,
+          bgcolor: '#ffffff',
+          color: '#242628',
+          border: 'none',
+          borderRadius: '12px 0 0 36px',
+          boxShadow: '0px 0px 2px rgba(15,17,19,0.1), 0px 8px 16px rgba(15,17,19,0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        },
+        '& .MuiBackdrop-root': {
+          top: `${APPBAR_HEIGHT}px`,
+          bgcolor: 'transparent',
         },
       }}
     >
-      <Stack direction="row" alignItems="center" sx={{ px: 1.5, pt: 1, pb: 0 }}>
-        <Typography variant="subtitle2" fontWeight={600} sx={{ flex: 1 }}>
-          Context
-        </Typography>
-        <IconButton size="small" onClick={close}>
-          <CloseOutlinedIcon sx={{ fontSize: 16 }} />
-        </IconButton>
-      </Stack>
+      {/* ── Tabs header ── */}
+      <Box sx={{ px: 2.5, pt: 2.5, pb: 0, flexShrink: 0 }}>
+        <Stack direction="row" alignItems="center" sx={{ gap: 1, overflow: 'hidden', position: 'relative' }}>
+          {TABS.map((tab) => {
+            const isActive = tab.id === activeTab
+            return (
+              <Stack
+                key={tab.id}
+                direction="row"
+                alignItems="center"
+                spacing={0.75}
+                onClick={() => setTab(tab.id)}
+                sx={{
+                  px: 1.5,
+                  py: 0.5,
+                  borderRadius: '12px',
+                  border: isActive ? '1px solid #8f9193' : '1px solid transparent',
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' },
+                }}
+              >
+                <Typography sx={{ fontSize: 12, fontWeight: 600, color: '#242628', letterSpacing: '0.3px', whiteSpace: 'nowrap' }}>
+                  {tab.label}
+                </Typography>
+                {tab.badge && (
+                  <Box sx={{
+                    bgcolor: '#1c4ee4',
+                    color: 'white',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    height: 16,
+                    minWidth: 16,
+                    px: 0.5,
+                    borderRadius: '12px',
+                    border: '1px solid white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    letterSpacing: '0.3px',
+                  }}>
+                    {tab.badge}
+                  </Box>
+                )}
+              </Stack>
+            )
+          })}
 
-      <Tabs
-        value={activeTab}
-        onChange={(_, v) => setTab(v)}
-        variant="fullWidth"
-        sx={{ px: 1, minHeight: 40, '& .MuiTabs-indicator': { height: 2 } }}
-      >
-        {TABS.map((t) => (
-          <Tab
-            key={t.id}
-            value={t.id}
-            label={t.label}
-            icon={t.icon}
-            iconPosition="start"
-            sx={{ minHeight: 40, gap: 0.5, px: 1, fontSize: '0.8rem' }}
-          />
-        ))}
-      </Tabs>
+          {/* Overflow gradient + chevron */}
+          <Box sx={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: 64,
+            background: 'linear-gradient(to right, rgba(255,255,255,0), white 50%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+          }}>
+            <IconButton size="small" sx={{ color: '#242628' }}>
+              <ChevronRightIcon sx={{ fontSize: 20 }} />
+            </IconButton>
+          </Box>
+        </Stack>
+      </Box>
 
-      <Divider />
+      {/* ── Body ── */}
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', pt: 2.5, pl: 2.5, pr: 0 }}>
 
-      <Box sx={{ flex: 1, overflowY: 'auto' }}>
-        {activeTab === 'details' && <DetailsTab />}
-        {activeTab === 'activity' && <ActivityTab />}
-        {activeTab === 'team' && <TeamTab />}
+        {/* Section header */}
+        <Box sx={{ pr: 3, mb: 1.5, flexShrink: 0 }}>
+          <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
+            <Box sx={{ flex: 1 }}>
+              <Typography sx={{ fontSize: 20, fontWeight: 600, color: '#242628', lineHeight: '24px', mb: 0.25, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                Title
+              </Typography>
+              <Typography sx={{ fontSize: 12, color: '#242628', letterSpacing: '0.3px', lineHeight: '16px' }}>
+                {'Meta data 1   •   Metadata 2   •   Metadata 3'}
+              </Typography>
+            </Box>
+            <IconButton size="small" onClick={close} sx={{ color: '#242628', mt: -0.25 }}>
+              <CloseIcon sx={{ fontSize: 20 }} />
+            </IconButton>
+          </Stack>
+        </Box>
+
+        {/* Content placeholder (header area) */}
+        <Box sx={{ pr: 3, mb: 1.5, flexShrink: 0 }}>
+          <Box sx={{ bgcolor: '#ffdad7', py: 0.5, display: 'flex', justifyContent: 'center', borderRadius: 0.5 }}>
+            <Typography sx={{ color: '#930012', fontSize: 10, fontWeight: 600, letterSpacing: '0.3px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              Replace me
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ pr: 3, mb: 0.5, flexShrink: 0 }}>
+          <Divider sx={{ borderColor: '#e2e2e5' }} />
+        </Box>
+
+        {/* Scrollable content */}
+        <Box sx={{ flex: 1, overflowY: 'auto', pr: '8px', display: 'flex', flexDirection: 'column',
+          '&::-webkit-scrollbar': { width: 9 },
+          '&::-webkit-scrollbar-track': { bgcolor: '#edeff1', boxShadow: 'inset 1px 0 0 #e8e8e8, inset -1px 0 0 #f0f0f0' },
+          '&::-webkit-scrollbar-thumb': { bgcolor: '#aaabae', borderRadius: 1 },
+        }}>
+          <Stack spacing={1.5} sx={{ py: 0.5 }}>
+            <Box sx={{ bgcolor: '#ffdad7', py: 0.5, display: 'flex', justifyContent: 'center', borderRadius: 0.5 }}>
+              <Typography sx={{ color: '#930012', fontSize: 10, fontWeight: 600 }}>Replace me</Typography>
+            </Box>
+            <Box sx={{ bgcolor: '#ffdad7', py: 0.5, display: 'flex', justifyContent: 'center', borderRadius: 0.5 }}>
+              <Typography sx={{ color: '#930012', fontSize: 10, fontWeight: 600 }}>Replace me</Typography>
+            </Box>
+          </Stack>
+        </Box>
+      </Box>
+
+      {/* ── Footer ── */}
+      <Box sx={{
+        bgcolor: 'white',
+        borderRadius: '0 0 0 36px',
+        flexShrink: 0,
+        boxShadow: '0px -20px 20px white',
+      }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ minHeight: 40, px: 2.5, py: 1 }}>
+          <Button
+            variant="outlined"
+            sx={{
+              borderColor: '#8f9193',
+              color: '#242628',
+              borderRadius: '12px',
+              textTransform: 'none',
+              fontWeight: 500,
+              fontSize: 14,
+              letterSpacing: '0.2px',
+              px: 1.5,
+              py: 1,
+              lineHeight: '20px',
+              '&:hover': { borderColor: '#242628', bgcolor: 'transparent' },
+            }}
+          >
+            {'Secondary'}
+          </Button>
+          <Button
+            variant="contained"
+            disableElevation
+            sx={{
+              background: 'linear-gradient(180deg, #4069fe 0%, #1c4ee4 100%)',
+              borderRadius: '12px',
+              textTransform: 'none',
+              fontWeight: 500,
+              fontSize: 14,
+              letterSpacing: '0.2px',
+              px: 1.5,
+              py: 1,
+              lineHeight: '20px',
+              color: 'white',
+              '&:hover': {
+                background: 'linear-gradient(180deg, #3558e0 0%, #1640c8 100%)',
+              },
+            }}
+          >
+            {'Primary'}
+          </Button>
+        </Stack>
       </Box>
     </Drawer>
   )

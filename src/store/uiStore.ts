@@ -14,7 +14,7 @@ type UiState = {
 }
 
 export const useUiStore = create<UiState>((set, get) => ({
-  contextPanelState: 'open',
+  contextPanelState: 'closed',
   contextPanelTab: 'details',
   navRailOpen: true,
 
