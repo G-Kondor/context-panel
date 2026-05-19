@@ -102,9 +102,9 @@ export function ContextPanel() {
 
           <motion.div
             key="panel"
-            initial={{ x: PANEL_WIDTH + 40, scale: 0.96 }}
-            animate={{ x: 0, scale: 1 }}
-            exit={{ x: PANEL_WIDTH + 40, scale: 0.96 }}
+            initial={{ x: PANEL_WIDTH + 40 }}
+            animate={{ x: 0 }}
+            exit={{ x: PANEL_WIDTH + 40 }}
             transition={PANEL_SPRING}
             style={{
               position: 'fixed',
