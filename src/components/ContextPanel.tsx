@@ -10,7 +10,6 @@ export const PANEL_WIDTH = 360
 const TABS = [
   { id: 'active', label: 'Active tab', badge: null },
   { id: 'inactive', label: 'Inactive + badge', badge: '99+' },
-  { id: 'tab3', label: 'Tab button', badge: null },
 ]
 
 const STEPS = [
