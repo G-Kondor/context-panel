@@ -18,7 +18,7 @@ type UiState = {
 
 export const useUiStore = create<UiState>((set, get) => ({
   contextPanelState: 'closed',
-  contextPanelTab: 'details',
+  contextPanelTab: 'cycle',
   navRailOpen: true,
   themeMode: 'light',
 
