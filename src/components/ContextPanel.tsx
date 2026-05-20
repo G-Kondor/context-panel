@@ -1,11 +1,11 @@
 import { useRef, useCallback, useState } from 'react'
-import { Box, Stack, Typography, IconButton, Divider, Button } from '@mui/material'
+import { Box, Stack, Typography, IconButton, Divider, Button, useTheme } from '@mui/material'
 import { AnimatePresence, motion } from 'motion/react'
 import CloseIcon from '@mui/icons-material/Close'
 import CheckIcon from '@mui/icons-material/Check'
 import { useContextPanel } from '@/hooks/useContextPanel'
 import { APPBAR_HEIGHT } from './TopBar'
-import { radius, concrete, actionPrimary } from '@/theme/tokens'
+import { radius, actionPrimary } from '@/theme/tokens'
 
 export const PANEL_WIDTH = 360
 
@@ -26,23 +26,25 @@ interface Step {
 }
 
 const STEPS: Step[] = [
-  { n: 1, label: 'Collect Employee Data', date: '2026 May 14', status: 'done' },
-  { n: 2, label: 'Calculate Gross Pay',   date: '2026 May 16', status: 'done' },
-  { n: 3, label: 'Process Deductions',    date: '2026 May 20', status: 'done' },
-  { n: 4, label: 'Approve Payroll',       date: '2026 May 22', status: 'active' },
-  { n: 5, label: 'Distribute Payments',   date: '2026 May 26', status: 'pending' },
-  { n: 6, label: 'Record and Report Payroll', date: '2026 May 30', status: 'pending' },
+  { n: 1, label: 'Collect Employee Data',     date: '2026 May 14', status: 'done' },
+  { n: 2, label: 'Calculate Gross Pay',        date: '2026 May 16', status: 'done' },
+  { n: 3, label: 'Process Deductions',         date: '2026 May 20', status: 'done' },
+  { n: 4, label: 'Approve Payroll',            date: '2026 May 22', status: 'active' },
+  { n: 5, label: 'Distribute Payments',        date: '2026 May 26', status: 'pending' },
+  { n: 6, label: 'Record and Report Payroll',  date: '2026 May 30', status: 'pending' },
 ]
 
 const SUCCESS_BG   = '#c2ffd2'
 const SUCCESS_ICON = '#1a7a3a'
-const MUTED_TEXT   = '#6f7377'
 
 const PANEL_SPRING = { type: 'spring', stiffness: 340, damping: 26 } as const
 
 const MOBILE_FOOTER_BREAKPOINT = 320
 
 function StepBadge({ step }: { step: Step }) {
+  const theme = useTheme()
+  const { panel } = theme.palette
+
   if (step.status === 'done') {
     return (
       <Box sx={{
@@ -75,11 +77,11 @@ function StepBadge({ step }: { step: Step }) {
     <Box sx={{
       width: 32, height: 32, minHeight: 32,
       borderRadius: '100px',
-      bgcolor: concrete[90],
+      bgcolor: theme.palette.divider,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       flexShrink: 0,
     }}>
-      <Typography sx={{ fontSize: 12, fontWeight: 600, color: concrete[15], letterSpacing: '0.3px', lineHeight: '16px' }}>
+      <Typography sx={{ fontSize: 12, fontWeight: 600, color: panel.subtleText, letterSpacing: '0.3px', lineHeight: '16px' }}>
         {step.n}
       </Typography>
     </Box>
@@ -88,6 +90,9 @@ function StepBadge({ step }: { step: Step }) {
 
 export function ContextPanel() {
   const { isOpen, activeTab, close, setTab } = useContextPanel()
+  const theme = useTheme()
+  const { panel } = theme.palette
+
   const observerRef = useRef<ResizeObserver | null>(null)
   const [isMobileFooter, setIsMobileFooter] = useState(false)
 
@@ -141,8 +146,8 @@ export function ContextPanel() {
                 width: '100%',
                 height: '100%',
                 borderRadius: `${radius.lg}px 0 0 ${radius.lg}px`,
-                background: '#ffffff',
-                color: concrete[15],
+                background: panel.surface,
+                color: theme.palette.text.primary,
                 boxShadow: '0px 0px 2px rgba(15,17,19,0.1), 0px 8px 16px rgba(15,17,19,0.1)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -164,12 +169,14 @@ export function ContextPanel() {
                         sx={{
                           px: 1.5, py: 0.5,
                           borderRadius: `${radius.lg}px`,
-                          border: isActive ? `1px solid ${concrete[60]}` : '1px solid transparent',
+                          border: isActive
+                            ? `1px solid ${panel.border}`
+                            : '1px solid transparent',
                           cursor: 'pointer',
-                          '&:hover': { bgcolor: 'rgba(0,0,0,0.04)' },
+                          '&:hover': { bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)' },
                         }}
                       >
-                        <Typography sx={{ fontSize: 12, fontWeight: 600, color: concrete[15], letterSpacing: '0.3px', whiteSpace: 'nowrap' }}>
+                        <Typography sx={{ fontSize: 12, fontWeight: 600, color: theme.palette.text.primary, letterSpacing: '0.3px', whiteSpace: 'nowrap' }}>
                           {tab.label}
                         </Typography>
                         <Box sx={{
@@ -198,14 +205,14 @@ export function ContextPanel() {
                 <Box sx={{ pr: 3, mb: 1.5, flexShrink: 0 }}>
                   <Stack direction="row" alignItems="flex-start" justifyContent="space-between">
                     <Box sx={{ flex: 1 }}>
-                      <Typography sx={{ fontSize: 24, fontWeight: 600, color: concrete[15], lineHeight: '30px', mb: 0.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      <Typography sx={{ fontSize: 24, fontWeight: 600, color: theme.palette.text.primary, lineHeight: '30px', mb: 0.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         Overview
                       </Typography>
                       <Stack direction="row" spacing={0.5} sx={{ mt: 0.25 }}>
                         {METATAGS.map((tag) => (
                           <Box key={tag} sx={{
-                            bgcolor: concrete[95],
-                            color: concrete[30],
+                            bgcolor: panel.subtleBg,
+                            color: panel.subtleText,
                             fontSize: 12, fontWeight: 500,
                             height: 24,
                             px: 0.5,
@@ -219,7 +226,7 @@ export function ContextPanel() {
                         ))}
                       </Stack>
                     </Box>
-                    <IconButton size="small" onClick={close} sx={{ color: concrete[15], mt: -0.25 }}>
+                    <IconButton size="small" onClick={close} sx={{ color: theme.palette.text.primary, mt: -0.25 }}>
                       <CloseIcon sx={{ fontSize: 20 }} />
                     </IconButton>
                   </Stack>
@@ -227,15 +234,18 @@ export function ContextPanel() {
 
                 {/* Divider */}
                 <Box sx={{ pr: 3, flexShrink: 0 }}>
-                  <Divider sx={{ borderColor: concrete[90] }} />
+                  <Divider sx={{ borderColor: theme.palette.divider }} />
                 </Box>
 
                 {/* Scrollable stepper */}
                 <Box sx={{
                   flex: 1, overflowY: 'auto', pr: '8px', pt: 1.5,
                   '&::-webkit-scrollbar': { width: 9 },
-                  '&::-webkit-scrollbar-track': { bgcolor: concrete[95], boxShadow: `inset 1px 0 0 ${concrete[90]}, inset -1px 0 0 ${concrete[95]}` },
-                  '&::-webkit-scrollbar-thumb': { bgcolor: concrete[70], borderRadius: 1 },
+                  '&::-webkit-scrollbar-track': {
+                    bgcolor: panel.subtleBg,
+                    boxShadow: `inset 1px 0 0 ${theme.palette.divider}, inset -1px 0 0 ${panel.subtleBg}`,
+                  },
+                  '&::-webkit-scrollbar-thumb': { bgcolor: panel.scrollThumb, borderRadius: 1 },
                 }}>
                   {STEPS.map((step, i) => {
                     const isLast = i === STEPS.length - 1
@@ -246,24 +256,24 @@ export function ContextPanel() {
                         direction="row"
                         alignItems="flex-start"
                         spacing={1}
-                        sx={{ pb: isLast ? 1 : 0.5, pt: i === 0 ? 0 : 0 }}
+                        sx={{ pb: isLast ? 1 : 0.5 }}
                       >
                         <Stack alignItems="center" sx={{ width: 34, flexShrink: 0, alignSelf: 'stretch' }}>
                           <StepBadge step={step} />
-                          {!isLast && <Box sx={{ flex: 1, width: '1px', bgcolor: concrete[90], mt: 1 }} />}
+                          {!isLast && <Box sx={{ flex: 1, width: '1px', bgcolor: theme.palette.divider, mt: 1 }} />}
                         </Stack>
 
                         <Box sx={{ flex: 1, pt: 0.5, pb: isLast ? 1 : 2.5 }}>
                           <Typography sx={{
                             fontSize: 14, fontWeight: 600,
-                            color: isMuted ? MUTED_TEXT : concrete[15],
+                            color: isMuted ? panel.muted : theme.palette.text.primary,
                             letterSpacing: '0.2px', lineHeight: '20px',
                           }}>
                             {step.label}
                           </Typography>
                           <Typography sx={{
                             fontSize: 12, fontWeight: 400,
-                            color: isMuted ? MUTED_TEXT : concrete[15],
+                            color: isMuted ? panel.muted : theme.palette.text.primary,
                             letterSpacing: '0.3px', lineHeight: '16px', mt: 0.5,
                           }}>
                             {step.date}
@@ -278,27 +288,23 @@ export function ContextPanel() {
               {/* ── Footer ── */}
               {isMobileFooter ? (
                 <Box sx={{
-                  bgcolor: 'white',
+                  bgcolor: panel.surface,
                   borderRadius: `0 0 0 ${radius.xxl}px`,
                   flexShrink: 0,
-                  boxShadow: '0px -20px 20px white',
+                  boxShadow: `0px -20px 20px ${panel.surface}`,
                   p: '20px',
                 }}>
-                  <Stack
-                    direction="column"
-                    spacing={1}
-                    sx={{ minHeight: 92, width: '100%', alignItems: 'center', justifyContent: 'center' }}
-                  >
+                  <Stack direction="column" spacing={1} sx={{ minHeight: 92, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
                     <Button
                       fullWidth
                       variant="outlined"
                       onClick={close}
                       sx={{
-                        borderColor: concrete[60], color: concrete[15],
+                        borderColor: panel.border, color: theme.palette.text.primary,
                         borderRadius: `${radius.lg}px`,
                         textTransform: 'none', fontWeight: 500, fontSize: 16,
                         letterSpacing: '0.2px', px: 1.5, py: 1, lineHeight: '24px',
-                        '&:hover': { borderColor: concrete[15], bgcolor: 'transparent' },
+                        '&:hover': { borderColor: theme.palette.text.primary, bgcolor: 'transparent' },
                       }}
                     >
                       Close
@@ -322,21 +328,21 @@ export function ContextPanel() {
                 </Box>
               ) : (
                 <Box sx={{
-                  bgcolor: 'white',
+                  bgcolor: panel.surface,
                   borderRadius: `0 0 0 ${radius.xxl}px`,
                   flexShrink: 0,
-                  boxShadow: '0px -20px 20px white',
+                  boxShadow: `0px -20px 20px ${panel.surface}`,
                 }}>
                   <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ minHeight: 40, px: 2.5, py: 1 }}>
                     <Button
                       variant="outlined"
                       onClick={close}
                       sx={{
-                        borderColor: concrete[60], color: concrete[15],
+                        borderColor: panel.border, color: theme.palette.text.primary,
                         borderRadius: `${radius.lg}px`,
                         textTransform: 'none', fontWeight: 500, fontSize: 14,
                         letterSpacing: '0.2px', px: 1.5, py: 1, lineHeight: '20px',
-                        '&:hover': { borderColor: concrete[15], bgcolor: 'transparent' },
+                        '&:hover': { borderColor: theme.palette.text.primary, bgcolor: 'transparent' },
                       }}
                     >
                       Close

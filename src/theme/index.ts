@@ -4,6 +4,23 @@ import {
   actionPrimary, surfaceLight, surfaceDark,
 } from './tokens'
 
+// ─── Palette augmentation ─────────────────────────────────────────────────────
+declare module '@mui/material/styles' {
+  interface Palette {
+    panel: {
+      surface:     string
+      subtleBg:    string
+      subtleText:  string
+      border:      string
+      muted:       string
+      scrollThumb: string
+    }
+  }
+  interface PaletteOptions {
+    panel?: Partial<Palette['panel']>
+  }
+}
+
 const sharedComponents = (bgPaper: string, dividerColor: string) => ({
   MuiCssBaseline: {
     styleOverrides: {
@@ -64,15 +81,23 @@ export const lightTheme = createTheme({
       contrastText: actionPrimary.onPrimary,
     },
     background: {
-      default: concrete[95],    // subtle gray page background
-      paper:   surfaceLight.default,  // white surfaces / drawers / cards
+      default: concrete[95],
+      paper:   surfaceLight.default,
     },
     text: {
-      primary:   concrete[15],  // #242628
-      secondary: concrete[40],  // #5D5E61
-      disabled:  concrete[50],  // #76777A
+      primary:   concrete[15],
+      secondary: concrete[40],
+      disabled:  concrete[50],
     },
-    divider: concrete[90],      // #E2E2E5
+    divider: concrete[90],
+    panel: {
+      surface:     surfaceLight.default,   // #ffffff
+      subtleBg:    concrete[95],           // #F0F0F3
+      subtleText:  concrete[30],           // #454749
+      border:      concrete[60],           // #8F9193
+      muted:       concrete[50],           // #76777A
+      scrollThumb: concrete[70],           // #AAABAE
+    },
   },
   typography: {
     fontFamily: '"Inter", "system-ui", -apple-system, sans-serif',
@@ -95,15 +120,23 @@ export const darkTheme = createTheme({
       contrastText: actionPrimary.onPrimary,
     },
     background: {
-      default: storm[10],             // #1A1C1E — page canvas
-      paper:   surfaceDark.default,   // #242628 — drawers / cards
+      default: storm[10],
+      paper:   surfaceDark.default,
     },
     text: {
       primary:   '#FFFFFF',
-      secondary: storm[60],   // #8F9193
-      disabled:  storm[50],   // #76777A
+      secondary: storm[60],
+      disabled:  storm[50],
     },
-    divider: storm[30],       // #454749
+    divider: storm[30],
+    panel: {
+      surface:     surfaceDark.default,    // #242628
+      subtleBg:    storm[25],              // #3A3C3E
+      subtleText:  storm[70],              // #AAABAE
+      border:      storm[50],              // #76777A
+      muted:       storm[60],              // #8F9193
+      scrollThumb: storm[40],              // #5D5E61
+    },
   },
   typography: {
     fontFamily: '"Inter", "system-ui", -apple-system, sans-serif',
