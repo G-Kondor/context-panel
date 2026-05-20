@@ -145,7 +145,7 @@ export function ContextPanel() {
               style={{
                 width: '100%',
                 height: '100%',
-                borderRadius: `${radius.lg}px 0 0 ${radius.lg}px`,
+                borderRadius: 0,
                 background: panel.surface,
                 color: theme.palette.text.primary,
                 boxShadow: '0px 0px 2px rgba(15,17,19,0.1), 0px 8px 16px rgba(15,17,19,0.1)',
@@ -289,7 +289,7 @@ export function ContextPanel() {
               {isMobileFooter ? (
                 <Box sx={{
                   bgcolor: panel.surface,
-                  borderRadius: `0 0 0 ${radius.xxl}px`,
+                  borderRadius: 0,
                   flexShrink: 0,
                   boxShadow: `0px -20px 20px ${panel.surface}`,
                   p: '20px',
@@ -329,7 +329,7 @@ export function ContextPanel() {
               ) : (
                 <Box sx={{
                   bgcolor: panel.surface,
-                  borderRadius: `0 0 0 ${radius.xxl}px`,
+                  borderRadius: 0,
                   flexShrink: 0,
                   boxShadow: `0px -20px 20px ${panel.surface}`,
                 }}>
